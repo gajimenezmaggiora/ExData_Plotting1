@@ -6,11 +6,11 @@ if(!file.exists('./household_power_consumption.txt')) {
 # Read source file
 data<-read.table('./household_power_consumption.txt', sep=';', header=T, na.strings='?')
 
-# Convert date
-data$Date<-strptime(data$Date,format='%d/%m/%Y')
+# Convert date and time to timestamp
+data$DateTime<-as.POSIXlt(paste(data$Date,data$Time),format='%d/%m/%Y %H:%M:%S')
 
 # Subset data
-data2<-data[(format(data$Date,'%d%m%Y')=='01022007' | format(data$Date,'%d%m%Y')=='02022007'), ]
+data2<-data[(format(data$DateTime,'%d%m%Y')=='01022007' | format(data$DateTime,'%d%m%Y')=='02022007'), ]
 
 # Open png device
 png('./plot1.png')
